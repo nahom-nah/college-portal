@@ -1,4 +1,5 @@
 import { Footer, NavBar } from "./../components";
+import Head from "next/head";
 import {
   LocationMarkerIcon,
   MailIcon,
@@ -8,6 +9,10 @@ import {
 export default function Contact() {
   return (
     <div>
+      <Head>
+        <title>college portal home page</title>
+        <meta name="Description" content="Build college portal"></meta>
+      </Head>
       <NavBar />
       <div className=" flex flex-col items-center space-y-6 pb-10 pt-32 bg-gradient-to-r from-blue-200 to-white via-white">
         {" "}
