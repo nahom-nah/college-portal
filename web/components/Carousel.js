@@ -2,6 +2,7 @@ import React, { useState, useEffect, useCallback } from "react";
 import { PrevButton, NextButton } from "./CarouselButtons";
 import { useEmblaCarousel } from "embla-carousel/react";
 import Image from "next/image";
+import Link from "next/link";
 export default function Carousel({ slides }) {
   const [viewportRef, embla] = useEmblaCarousel({
     dragFree: true,
@@ -40,11 +41,15 @@ export default function Carousel({ slides }) {
                     width="1100"
                   />
                 </div>
+
                 <div className=" bg-gray-900 bg-opacity-60   opacity-0 hover:opacity-100 duration-300 absolute inset-0 z-10 flex justify-around items-center   font-semibold">
                   <div className="space-y-6 ">
-                    <div className="text-3xl text-white font-bold">
-                      {index.title}
-                    </div>
+                    {" "}
+                    <Link href="/program-detail">
+                      <div className="cursor-pointer hover:underline text-3xl text-white font-bold">
+                        {index.title}
+                      </div>
+                    </Link>
                   </div>
                 </div>
               </div>

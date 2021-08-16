@@ -1,4 +1,5 @@
 import { LocationMarkerIcon } from "@heroicons/react/solid";
+import React, { useRef, useEffect, useState } from "react";
 import { NavBar } from "../components";
 import Carousel from "../components/Carousel";
 import Image from "next/image";
@@ -17,7 +18,26 @@ const slides = [
   { src: "/class-four.jpg", title: "123" },
 ];
 
+import mapboxgl from "!mapbox-gl"; // eslint-disable-line import/no-webpack-loader-syntax
+import Link from "next/link";
+
+mapboxgl.accessToken =
+  "pk.eyJ1IjoibmFob20xMDEiLCJhIjoiY2tzZTdrbjFmMHYxZTJwbzRjd3Q4ZXdlMSJ9.KTWO2a04dzlg509DVib2Ag";
 function Home(props) {
+  const mapContainer = useRef(null);
+  const map = useRef(null);
+  const [lng, setLng] = useState(-70.9);
+  const [lat, setLat] = useState(42.35);
+  const [zoom, setZoom] = useState(9);
+  useEffect(() => {
+    if (map.current) return; // initialize map only once
+    map.current = new mapboxgl.Map({
+      container: mapContainer.current,
+      style: "mapbox://styles/mapbox/streets-v11",
+      center: [lng, lat],
+      zoom: zoom,
+    });
+  });
   return (
     <div>
       <Head>
@@ -41,9 +61,11 @@ function Home(props) {
                 <button className="px-8 py-1 rounded-md text-white font-semibold bg-blue-600 hover:bg-blue-700">
                   Apply Now
                 </button>
-                <button className="font-semibold rounded-md border-2 border-blue-200 px-4 py-1 hover:bg-blue-200">
-                  How To Apply
-                </button>
+                <Link href="/how-to-apply">
+                  <div className="cursor-pointer font-semibold rounded-md border-2 border-blue-200 px-4 py-1 hover:bg-blue-200">
+                    How To Apply
+                  </div>
+                </Link>
               </div>
             </div>
           </div>
@@ -52,17 +74,17 @@ function Home(props) {
           </div>
         </div>
       </div>
-      <div className=" hidden lg:flex space-x-16 md:relative md:bottom-20  md:justify-center">
-        <div className="px-4 py-4 cursor-pointer flex justify-center rounded-md  shadow-md h-36 w-44 items-center bg-gradient-to-br from-white to-blue-300 via-white  ">
+      <div className=" hidden lg:flex space-x-16 md:relative md:bottom-16  md:justify-center">
+        <div className="px-4 py-4 cursor-pointer flex justify-center rounded-md  shadow-lg h-36 w-44 items-center bg-gradient-to-br from-white to-blue-300 via-white  ">
           <div className="font-semibold">How does YIC Online Work</div>
         </div>
-        <div className="px-4 py-4 cursor-pointer flex justify-center rounded-md  shadow-md h-36 w-44 items-center bg-gradient-to-br to-blue-300 via-white  from-white">
+        <div className="px-4 py-4 cursor-pointer flex justify-center rounded-md  shadow-lg h-36 w-44 items-center bg-gradient-to-br to-blue-300 via-white  from-white">
           <div className="font-semibold">Facts About YIC</div>
         </div>
-        <div className="px-4 py-4 cursor-pointer flex justify-center rounded-md  shadow-md h-36 w-44 items-center bg-gradient-to-br from-blue-300 via-white  to-white">
+        <div className="px-4 py-4 cursor-pointer flex justify-center rounded-md  shadow-lg h-36 w-44 items-center bg-gradient-to-br from-blue-300 via-white  to-white">
           <div className="font-semibold">Intro to MBA</div>
         </div>
-        <div className="px-4 py-4 cursor-pointer flex justify-center rounded-md  shadow-md h-36 w-44 items-center bg-gradient-to-br from-blue-300 via-white  to-white">
+        <div className="px-4 py-4 cursor-pointer flex justify-center rounded-md  shadow-lg h-36 w-44 items-center bg-gradient-to-br from-blue-300 via-white  to-white">
           <div className="font-semibold">Online Learning Requirments</div>
         </div>
       </div>
@@ -171,9 +193,13 @@ function Home(props) {
             use. You can visit the "how it works" section to understand the
             application process until the final payment verification steps.
           </div>
-          <button className="px-3 py-2 bg-blue-800 font-semibold text-white">
-            How To Apply
-          </button>
+          <div className="flex">
+            <Link href="/how-to-apply">
+              <div className="cursor-pointer px-3 py-2 bg-blue-800 font-semibold text-white">
+                How To Apply
+              </div>
+            </Link>
+          </div>
         </div>
         <div className="lg:w-1/2 mt-4 lg:mt-0 flex items-center justify-center">
           <div className="w-5/6">
@@ -277,12 +303,18 @@ function Home(props) {
       <div className="pt-20  space-y-4">
         <div className="flex justify-center items-center space-x-2">
           <LocationMarkerIcon className="h-8 text-yellow-400" />
-          <div className="text-4xl text-gray-800 font-bold">Contact us</div>
+
+          <div className="text-4xl text-gray-800 font-bold">
+            {" "}
+            <Link href="/contact">Contact us</Link>
+          </div>
         </div>{" "}
         <div className="text-center text-xl font-semibold text-gray-700">
           Asmara Street, Addis Ababa, Ethiopia . info@yic.edu.et . +251906505050
         </div>
-        <div></div>
+        <div>
+          <div ref={mapContainer} className="map-container" />
+        </div>
       </div>
       <Footer />
     </div>

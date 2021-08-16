@@ -5,8 +5,8 @@ export default function Navbar() {
   return (
     <div className=" bg-gradient-to-r z-10 from-blue-200 via-white to-white top-0 h-16 w-screen fixed">
       <nav className="px-2  py-2 flex justify-between items-center md:px-16 ">
-        <div className="w-24">
-          <Image src="/logo.png" alt="logo" height="628" width="1100" />
+        <div className="w-20">
+          <Image src="/logo.png" alt="logo" height="628" width="900" />
         </div>
 
         <ul className="lg:flex  space-x-4 hidden">
